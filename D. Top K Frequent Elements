@@ -1,0 +1,28 @@
+Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
+
+USED MAX HEAP HERE
+
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        vector<int> ans;
+        unordered_map<int, int> mpp;
+        priority_queue<pair<int, int>> maxh;
+
+        for(int i = 0; i < nums.size(); i++) mpp[nums[i]]++;
+        for(auto it : mpp) maxh.push({it.second, it.first});
+        while(k-- && !maxh.empty()) {
+            ans.push_back(maxh.top().second);
+            maxh.pop();
+        }
+        sort(ans.begin(), ans.end());
+        return ans;
+    }
+};
+
+Average case for unordered map insertion takes O(N) for inserting all the elements.
+Average case for priority queue insertion takes O(NlogN) for inserting all the elements.
+Average case to access top k elements takes O(K)
+Overall time is O(N+NlogN+K) = O(NlogN)
+
+SC - O(n)
