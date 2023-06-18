@@ -20,5 +20,5 @@ public:
     }
 };
 
-TC - O(n) + O(nlogn) 
+TC - O(n) + O(nlogk) = O(nlogk) 
 SC - O(n)
