@@ -14,3 +14,6 @@ The same property must be recursively true for all sub-trees in that Binary Tree
 
 Min-Heap: In a Min-Heap the key present at the root node must be minimum among the keys present at all of it’s children. 
 The same property must be recursively true for all sub-trees in that Binary Tree. . 
+
+If we need to print array in ascending order so smallest element in k range will come first, that is top of min heap. 
+If we need to print array in descending order, I think we will use max-heap.
