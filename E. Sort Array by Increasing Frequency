@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<int> frequencySort(vector<int>& nums) {
+        vector<int> ans;
+        unordered_map<int, int> mp;
+        priority_queue <pair<int, int>> maxh;
+        for(int i = 0; i < nums.size(); i++) {
+            mp[nums[i]]++;
+        }
+        for(auto it : mp) {
+            maxh.push({-it.second, it.first});
+        }
+        while(maxh.size() > 0) {
+            for(int i = 0; i < -(maxh.top().first); i++) {
+                ans.push_back(maxh.top().second);
+            }
+            maxh.pop();
+        }
+        return ans;
+    }
+};
+
+Inserting in maxHeap as -ve frequency so that element with lowest frequency stays at top of the heap &
+If frequency is same for two elements in that case comparison is done using second element. As it is max heap greater element (second element) always stays at the top in that case. &
+"-(q.top().first)" because we have to run the loop for +ve times of frequency.
