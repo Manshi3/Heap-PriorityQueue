@@ -1,0 +1,32 @@
+Given an array of strings words and an integer k, return the k most frequent strings.
+
+Return the answer sorted by the frequency from highest to lowest. Sort the words with the same frequency by their lexicographical order.
+
+class Solution {
+public:
+    class comp {
+    public:
+        bool operator() (pair<int, string> &p1, pair<int, string> &p2) {
+            if(p1.first < p2.first) return true;
+            else if(p1.first > p2.first) return false;
+            else if(p1.second < p2.second) return false;
+            return true;
+        }
+    };
+    vector<string> topKFrequent(vector<string>& words, int k) {
+        vector<string> ans;
+
+        unordered_map<string, int> mp;
+        for(int i = 0; i < words.size(); i++) mp[words[i]]++;
+
+        priority_queue<pair<int, string>, vector<pair<int, string>>, comp> minheap;
+        for(auto it : mp) minheap.push({it.second, it.first});
+
+        while(!minheap.empty() && k > 0) {
+            ans.push_back(minheap.top().second);
+            minheap.pop();
+            k--;
+        }
+        return ans;
+    }
+};
