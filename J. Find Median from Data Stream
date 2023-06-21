@@ -1,0 +1,60 @@
+The median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value, and the median is the mean of the two middle values.
+
+For example, for arr = [2,3,4], the median is 3.
+For example, for arr = [2,3], the median is (2 + 3) / 2 = 2.5.
+Implement the MedianFinder class:
+
+MedianFinder() initializes the MedianFinder object.
+void addNum(int num) adds the integer num from the data stream to the data structure.
+double findMedian() returns the median of all elements so far. Answers within 10-5 of the actual answer will be accepted.
+
+
+
+class MedianFinder {
+public:
+    priority_queue<int>mxh;                                  //max heap
+priority_queue<int,vector<int>,greater<int>> mnh;        //min heap
+
+MedianFinder() {
+}
+
+void addNum(int num) {
+    
+	//INSERTION
+    if(mxh.empty() || num<mxh.top()) mxh.push(num);               //if maxh is empty or num is smaller then maxh top, push in maxh      
+    else mnh.push(num);                                           //else push in minh
+    
+	//BALANCING HEAP
+    if(mxh.size()>mnh.size() && mxh.size()-mnh.size()>1){         //if maxh size is greater than minh (diff greater than 1)
+        mnh.push(mxh.top());                                      //then pop and push in minh
+        mxh.pop();
+    }
+    else if(mnh.size()>mxh.size() && mnh.size()-mxh.size()>1){    //if minh size is greater than maxh (diff greater than 1)
+        mxh.push(mnh.top());                                      //then pop and push in maxh
+        mnh.pop();
+    }
+}
+
+double findMedian() {
+    
+    if(mxh.size()==mnh.size()){                           //if maxh and minh size is equal, then return the 
+        double a=mxh.top(), b=mnh.top();                  //average of maxh.top and minh.top
+        return (a+b)/2.0;
+    }
+    else{
+        if(mxh.size()>mnh.size()){                        //else if maxh size is greater, return ,maxh top
+            return (double) mxh.top();
+        }
+        else{                                             //else return minh top
+            return (double) mnh.top();
+        }
+    }
+}
+};
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder* obj = new MedianFinder();
+ * obj->addNum(num);
+ * double param_2 = obj->findMedian();
+ */
